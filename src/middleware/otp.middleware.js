@@ -61,13 +61,10 @@ export const requestOTP = async (req, res) => {
         await OTP.create({ email, otp })
         await sendOTPEmail(email, otp)
 
-        console.log("OTP process completed for:", email)
-
         res.status(200).json({
             message: "OTP sent to your email. Check your inbox or spam folder."
         })
     } catch (error) {
-        console.error("requestOTP error:", error.message)
         res.status(500).json({
             message: `Internal Server Error ${error.message}`
         })
