@@ -8,8 +8,6 @@ import path from "path"
 import { fileURLToPath } from "url"
 
 const app = express()
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
 
 const allowedOrigins = [process.env.LOCAL_FRONTEND_URL, process.env.LIVE_FRONTEND_URL]
 
@@ -23,12 +21,5 @@ app.use(cookieParser())
 app.use("/api/user/", userRouter)
 app.use("/api/post/", postRouter)
 app.use("/api/activity-logs/", activityRouter)
-
-if (process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "dist")))
-    app.get("/{*splat}", (req, res) => {
-        res.sendFile(path.join(__dirname, "dist", "index.html"))
-    })
-}
 
 export default app
