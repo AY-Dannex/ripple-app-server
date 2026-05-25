@@ -11,11 +11,11 @@ const app = express()
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
+const allowedOrigins = [process.env.LOCAL_FRONTEND_URL, process.env.LIVE_FRONTEND_URL]
+
 app.use(cors({
-    origin: process.env.NODE_ENV === "production" 
-        ? false  // same origin in production, no CORS needed
-        : "http://localhost:5173", // allow Vite dev server locally
-    credentials: true // needed for cookies to work
+    origin: allowedOrigins,
+    credentials: true
 }))
 
 app.use(express.json())
